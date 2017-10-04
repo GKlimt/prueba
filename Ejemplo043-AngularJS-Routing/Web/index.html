@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html ng-app="appRutas">
+<head>
+<meta charset="UTF-8">
+<title>Enrutamiento AngularJs</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
+</head>
+<body>
+	
+	
+	<h1>Encabezado de Pagina</h1>
+	
+	<h3>
+		<a  href="#noticias/nacional">Noticias</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a  href="#deportes/madrid/rayo/permanencia">Deportes</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a  href="#cultura/martes/informe">Cultura</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a  href="#sociedad/xxx/rojo/yyy/azul">Sociedad</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+	</h3>
+	
+	<!-- 
+		Directiva ng-view EXCLUSIVA SI TRABAJAMOS CON ROUTING
+		Permite cargar las vistar parciales configuradas enla aplicaciojn
+	-->
+	
+	<div ng-view></div>
+	
+	
+	<br/><br/><br/>
+	
+	
+	<h1>Pie de Pagina</h1>
+	
+	
+		
+		
+	
+		
+
+
+
+	<!-- SCRIPTS -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+
+	<!-- AngularJS Locale (para Español) -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_es-es.min.js"></script>
+	<!-- AngularJS Locale (para Español) -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+
+	<script type="text/javascript">
+
+	
+	
+	
+	
+	
+	
+	var rutas = angular.module("appRutas", ["ngRoute"]);
+	
+	/**
+	*Crear bloque config (se ejecuta al comienzo de la App)
+	para configurar el sistema de enturamiento mediante el servicio
+	$routeProvider
+	*/
+	
+	rutas.config(["$routeProvider", function($routeProvider){
+		//Configurar cada una de las rutas contempladas
+		
+		//NOTICIAS
+		$routeProvider.when("/noticias/:variable", {
+			templateUrl: "noticias.html",
+			controller: "noticiasController"
+		});
+		
+		//DEPORTES
+		$routeProvider.when("/deportes/madrid/rayo/:variable", {
+			templateUrl: "deportes.html",
+			controller: "deportesController"
+		});
+		
+		//CULTURA
+		$routeProvider.when("/cultura/:variable1/:variable2", {
+			templateUrl: "cultura.html",
+			controller: "culturaController"
+		});
+		
+		//SOCIEDAD
+		$routeProvider.when("/sociedad/:variable1/rojo/:variable2/azul", {
+			templateUrl: "sociedad.html",
+			controller: "sociedadController"
+		});
+		
+		//Cualquier URL que no sea las anteriores
+		$routeProvider.otherwise({
+			//Redireccionar a la pagina noticias
+			redirectTo: "/noticias/Pagina Inicio"
+		});
+	}])
+	
+	
+	
+	
+	
+//*************+CONTROLADOR***************
+
+rutas.controller("noticiasController",[
+	"$scope","$routeParams",function($scope, $routeParams){
+	
+		$scope.mensaje = "Contenido generado por Noticias Controller" +
+		"'<br/> 'Parametro variable: " + $routeParams.variable;
+		
+	}
+]);
+	
+	rutas.controller("deportesController",[
+		"$scope","$routeParams",function($scope, $routeParams){
+		
+			$scope.mensaje = "Contenido generado por Deportes Controller" + 
+			"<br/> Parametro variable: " + $routeParams.variable;
+			
+		}
+	]);
+	rutas.controller("culturaController",[
+		"$scope","$routeParams",function($scope, $routeParams){
+		
+			$scope.mensaje = "Contenido generado por Cultura Controller" + 
+			"<br/> Parametro variable1: " + $routeParams.variable1 +
+			"<br/> Parametro variable2: " + $routeParams.variable2;
+			
+		}
+	]);
+		
+		rutas.controller("sociedadController",[
+			"$scope","$routeParams",function($scope, $routeParams){
+			
+				$scope.mensaje = "Contenido generado por Sociedad Controller" +
+				"<br/> Parametro variable1: " + $routeParams.variable1 +
+				"<br/> Parametro variable2: " + $routeParams.variable2;
+				
+			}
+		]);
+	</script>
+
+</body>
+</html>
